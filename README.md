@@ -43,16 +43,64 @@ feel free to follow the steps below.
 <summary>See walkthrough</summary>
 
 1. Get the username of the person who made the post about EmptyStack in `forum_posts`.
+-- figure out what i can search through the posts
+\d forum_posts 
+
+find authors of posts where content had emptystack and dad in their post and the post was made in april
+SELECT author FROM forum_posts WHERE content ILIKE '%EmptyStack%' AND content ILIKE '%dad%' AND date BETWEEN '04-01-48' AND '04-30-48';
+
+smart-money-44
+
+
+
 2. Get the last name of the person associated with that username in `forum_accounts`.
+
+find accounts where their username is smart-money-44 and display their first and last name
+\d forum_accounts
+SELECT * FROM forum_accounts WHERE username = 'smart-money-44';
+last_name = Steele
+
+
+
 3. Find all other accounts with the same last name.
+SELECT * FROM forum_accounts WHERE last_name = 'Steele';
+
 4. Find all accounts in `emptystack_accounts` with the same last name.
+SELECT * FROM emptystack_accounts WHERE last_name = 'Steele';
+
 5. There will only be one EmptyStack employee with a forum account. Use their credentials
    to access `node mainframe`, which will output a new `sql` file for you to run.
+
+--find the one person that has both an emptystack and forum account (andrew)
+
+SELECT * FROM forum_accounts WHERE last_name = 'Steele';
+SELECT * FROM emptystack_accounts WHERE last_name = 'Steele';
+
+username:triple-cart-38
+password:password456
+
 6. Find the message in `emptystack_messages` that mentions a project involving
    self-driving taxis. That message is sent from an admin account and also reveals
    the project code.
+
+
+   --find what i need to search through
+   \d emptystack_messages
+   
+   --find the messages about taxis
+   SELECT * FROM emptystack_messages WHERE body ILIKE '%taxi%';
+
+   from your-boss-99
+
 7. Get the credentials for the admin account from `emptystack_accounts`.
+SELECT * FROM emptystack_accounts WHERE username = 'your-boss-99';
+password: notagaincarter.
+
 8. Get the ID of the project from `emptystack_projects`.
+
+SELECT * FROM emptystack_projects WHERE code = 'TAXI';
+id is DczE0v2b
+
 9. Use that information to stop the project: `node mainframe -stop`!
 
 </details>
